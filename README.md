@@ -14,7 +14,11 @@ Parte A
 13. B
 14. B
 15. B
+
+
+
 Parte B
+
 Pregunta 1
 
 Un algoritmo es como una serie de pasos ordenados para hacer algo o resolver un problema. Básicamente, son instrucciones que se siguen en cierto orden para llegar a un resultado. Por ejemplo, hacer un sánduche sería un algoritmo: sacar el pan, poner jamón, poner queso y cerrar el pan.
