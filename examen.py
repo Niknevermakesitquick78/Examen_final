@@ -1,5 +1,5 @@
 import random
-import os
+
 class TresEnRaya:
     def __init__(self, nacho, esqueleto):
         self.nacho = nacho
@@ -108,40 +108,9 @@ class TresEnRaya:
             self.simbolo_actual = "X"
 
 
-def cargar_historial():
-    historial = {}
-
-    if os.path.exists("historial.txt"):
-        archivo = open("historial.txt", "r")
-
-        for linea in archivo:
-            datos = linea.strip().split(",")
-
-            nombre = datos[0]
-            victorias = int(datos[1])
-
-            historial[nombre] = victorias
-
-        archivo.close()
-
-    return historial
-
-
-def guardar_historial(historial):
-    archivo = open("historial.txt", "w")
-
-    for nombre in historial:
-        archivo.write(nombre + "," + str(historial[nombre]) + "\n")
-
-    archivo.close()
-
+historial = {}
 
 print("=== TRES EN RAYA DEL MONASTERIO ===")
-print("Cargando gloria de los luchadores...")
-
-historial = cargar_historial()
-
-print(historial)
 
 while True:
     print("\n1. Entrar al ring")
@@ -204,25 +173,10 @@ while True:
         print("\nGLORIA ACTUAL:")
         print(historial)
 
-        otra = input("\nOtra batalla? (s/n): ")
-
-        while otra.lower() not in ["s", "n"]:
-            otra = input("Pon s o n luchador: ")
-
-        if otra.lower() == "s":
-            juego.reiniciar()
-        else:
-            print("\nGuardando gloria...")
-            guardar_historial(historial)
-            print("Hasta luego luchador.")
-            break
-
     elif opcion == "2":
         print("\nGLORIA DE LOS LUCHADORES")
         print(historial)
 
     elif opcion == "3":
-        print("\nGuardando gloria...")
-        guardar_historial(historial)
-        print("Hasta luego luchador.")
+        print("\nHasta luego luchador.")
         break
