@@ -1,16 +1,14 @@
 import random
 import os
-
-class Conecta4:
+class TresEnRaya:
     def __init__(self, nacho, esqueleto):
         self.nacho = nacho
         self.esqueleto = esqueleto
 
         self.tablero = [
-            [" ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " "]
+            [" ", " ", " "],
+            [" ", " ", " "],
+            [" ", " ", " "]
         ]
 
         if random.randint(1, 2) == 1:
@@ -22,37 +20,59 @@ class Conecta4:
 
         self.juego_activo = True
 
-    def mostrar_tablero(self, con_columnas=True):
-        if con_columnas:
-            print(" 1 2 3 4 5")
+    def mostrar_tablero(self, con_numeros=True):
+        numero = 1
 
-        for fila in self.tablero:
-            print("+-+-+-+-+-+")
-            print("|" + "|".join(fila) + "|")
+        for fila in range(3):
+            linea = ""
 
-        print("+-+-+-+-+-+")
+            for columna in range(3):
+                valor = self.tablero[fila][columna]
 
-    def soltar_ficha(self, columna):
-        columna = columna - 1
+                if valor == " " and con_numeros:
+                    linea += str(numero)
+                else:
+                    linea += valor
 
-        if columna < 0 or columna > 4:
-            print("Esa columna no existe en el ring.")
+                if columna < 2:
+                    linea += " | "
+
+                numero += 1
+
+            print(linea)
+
+            if fila < 2:
+                print("---------")
+
+    def colocar_ficha(self, posicion):
+        if posicion < 1 or posicion > 9:
+            print("Esa posicion no existe en el ring.")
             return False
 
-        for fila in range(3, -1, -1):
-            if self.tablero[fila][columna] == " ":
-                self.tablero[fila][columna] = self.simbolo_actual
-                return True
+        fila = (posicion - 1) // 3
+        columna = (posicion - 1) % 3
 
-        print("La columna ya esta llena de poder.")
-        return False
+        if self.tablero[fila][columna] != " ":
+            print("Esa posicion ya tiene poder luchador.")
+            return False
+
+        self.tablero[fila][columna] = self.simbolo_actual
+        return True
 
     def verificar_ganador(self):
         for fila in self.tablero:
-            for i in range(2):
-                if fila[i] != " ":
-                    if fila[i] == fila[i+1] == fila[i+2] == fila[i+3]:
-                        return fila[i]
+            if fila[0] == fila[1] == fila[2] != " ":
+                return fila[0]
+
+        for columna in range(3):
+            if self.tablero[0][columna] == self.tablero[1][columna] == self.tablero[2][columna] != " ":
+                return self.tablero[0][columna]
+
+        if self.tablero[0][0] == self.tablero[1][1] == self.tablero[2][2] != " ":
+            return self.tablero[0][0]
+
+        if self.tablero[0][2] == self.tablero[1][1] == self.tablero[2][0] != " ":
+            return self.tablero[0][2]
 
         return None
 
@@ -65,10 +85,9 @@ class Conecta4:
 
     def reiniciar(self):
         self.tablero = [
-            [" ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " "]
+            [" ", " ", " "],
+            [" ", " ", " "],
+            [" ", " ", " "]
         ]
 
         if random.randint(1, 2) == 1:
@@ -89,11 +108,11 @@ class Conecta4:
             self.simbolo_actual = "X"
 
 
-def cargar_puntuaciones():
-    puntuaciones = {}
+def cargar_historial():
+    historial = {}
 
-    if os.path.exists("puntuaciones.txt"):
-        archivo = open("puntuaciones.txt", "r")
+    if os.path.exists("historial.txt"):
+        archivo = open("historial.txt", "r")
 
         for linea in archivo:
             datos = linea.strip().split(",")
@@ -101,48 +120,50 @@ def cargar_puntuaciones():
             nombre = datos[0]
             victorias = int(datos[1])
 
-            puntuaciones[nombre] = victorias
+            historial[nombre] = victorias
 
         archivo.close()
 
-    return puntuaciones
+    return historial
 
 
-def guardar_puntuaciones(puntuaciones):
-    archivo = open("puntuaciones.txt", "w")
+def guardar_historial(historial):
+    archivo = open("historial.txt", "w")
 
-    for nombre in puntuaciones:
-        archivo.write(nombre + "," + str(puntuaciones[nombre]) + "\n")
+    for nombre in historial:
+        archivo.write(nombre + "," + str(historial[nombre]) + "\n")
 
     archivo.close()
 
 
-print("=== CONECTA 4 DEL MONASTERIO ===")
+print("=== TRES EN RAYA DEL MONASTERIO ===")
 print("Cargando gloria de los luchadores...")
 
-puntuaciones = cargar_puntuaciones()
+historial = cargar_historial()
+
+print(historial)
 
 while True:
     print("\n1. Entrar al ring")
-    print("2. Ver gloria de los luchadores")
-    print("3. Abandonar el monasterio")
+    print("2. Ver gloria")
+    print("3. Salir del monasterio")
 
     opcion = input("Elige una opcion: ")
 
     while opcion not in ["1", "2", "3"]:
-        opcion = input("Opcion invalida. Elige 1, 2 o 3: ")
+        opcion = input("Opcion invalida luchador: ")
 
     if opcion == "1":
         nacho = input("Nombre del luchador 1: ")
         esqueleto = input("Nombre del luchador 2: ")
 
-        if nacho not in puntuaciones:
-            puntuaciones[nacho] = 0
+        if nacho not in historial:
+            historial[nacho] = 0
 
-        if esqueleto not in puntuaciones:
-            puntuaciones[esqueleto] = 0
+        if esqueleto not in historial:
+            historial[esqueleto] = 0
 
-        juego = Conecta4(nacho, esqueleto)
+        juego = TresEnRaya(nacho, esqueleto)
 
         print("\nComienza:", juego.jugador_actual)
 
@@ -151,9 +172,9 @@ while True:
 
             while True:
                 try:
-                    columna = int(input(f"{juego.jugador_actual} ({juego.simbolo_actual}) elige columna: "))
+                    posicion = int(input(f"\n{juego.jugador_actual} ({juego.simbolo_actual}) elige posicion (1-9): "))
 
-                    if juego.soltar_ficha(columna):
+                    if juego.colocar_ficha(posicion):
                         break
 
                 except:
@@ -162,16 +183,16 @@ while True:
             ganador = juego.verificar_ganador()
 
             if ganador != None:
-                juego.mostrar_tablero()
+                juego.mostrar_tablero(False)
 
                 print(f"\n{juego.jugador_actual.upper()} TIENE LAS EAGLE POWERS!")
 
-                puntuaciones[juego.jugador_actual] += 1
+                historial[juego.jugador_actual] += 1
 
                 juego.juego_activo = False
 
             elif juego.tablero_lleno():
-                juego.mostrar_tablero()
+                juego.mostrar_tablero(False)
 
                 print("\nEMPATE DE MACHOS!")
 
@@ -180,10 +201,10 @@ while True:
             else:
                 juego.cambiar_turno()
 
-        print("\nPUNTUACIONES:")
-        print(puntuaciones)
+        print("\nGLORIA ACTUAL:")
+        print(historial)
 
-        otra = input("\nQuieres otra batalla? (s/n): ")
+        otra = input("\nOtra batalla? (s/n): ")
 
         while otra.lower() not in ["s", "n"]:
             otra = input("Pon s o n luchador: ")
@@ -192,16 +213,16 @@ while True:
             juego.reiniciar()
         else:
             print("\nGuardando gloria...")
-            guardar_puntuaciones(puntuaciones)
+            guardar_historial(historial)
             print("Hasta luego luchador.")
             break
 
     elif opcion == "2":
         print("\nGLORIA DE LOS LUCHADORES")
-        print(puntuaciones)
+        print(historial)
 
     elif opcion == "3":
         print("\nGuardando gloria...")
-        guardar_puntuaciones(puntuaciones)
+        guardar_historial(historial)
         print("Hasta luego luchador.")
         break
