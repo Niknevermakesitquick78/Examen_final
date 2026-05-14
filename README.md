@@ -1,4 +1,4 @@
-Parte A
+PARTE A
 1. B
 2. B
 3. B
@@ -7,34 +7,27 @@ Parte A
 6. B
 7. B
 8. B
-9. B
-10. B
-11. B
+9. C
+10. C
+11. C
 12. B
-13. B
+13. C
 14. B
 15. B
-
-
-
 Parte B
-
 Pregunta 1
-
-Un algoritmo es como una serie de pasos ordenados para hacer algo o resolver un problema. Básicamente, son instrucciones que se siguen en cierto orden para llegar a un resultado. Por ejemplo, hacer un sánduche sería un algoritmo: sacar el pan, poner jamón, poner queso y cerrar el pan.
-
+Un algoritmo en escencia es una serie de pasos ordenados para resolver un problema o hacer una tarea. En programación, primero intentaría entender bien el problema, luego pensar la lógica paso por paso, después escribir el código, probarlo y corregir errores si algo falla, conociendome usaria mas fuerza bruta pero si entiendo bien el problema ya iría por quizá tipado dinámico.
 Pregunta 2
-
-Un parámetro es la variable que se escribe cuando se crea la función, mientras que el argumento es el valor real que le pasas cuando usas la función. Por ejemplo, en saludar(nombre), nombre es el parámetro. Pero si haces saludar("Ana"), "Ana" es el argumento.
-
+print() sirve para mostrar información en pantalla, mientras que return sirve para devolver un valor desde una función. Usaría print() cuando quiero que el usuario vea algo, y return cuando necesito guardar o usar el resultado en otra parte del programa.
 Pregunta 3
-
-Un bucle infinito pasa cuando un ciclo nunca deja de ejecutarse porque la condición siempre sigue siendo verdadera. Por ejemplo, un while que nunca cambia la variable que controla la condición. Se puede evitar asegurándose de que en algún momento la condición cambie y el bucle pueda terminar.
-
+El scope o alcance es la parte del programa donde una variable existe y puede usarse. Una variable local solo existe dentro de una función, mientras que una global puede usarse en varias partes del programa fuera de funciones.
 Pregunta 4
-
-El constructor sirve para inicializar los objetos de una clase, o sea, para darles valores iniciales cuando se crean. En Python normalmente se usa __init__. Si no defines un constructor, Python usa uno vacío automáticamente, pero entonces el objeto no tendría atributos inicializados desde el inicio.
-
+Una lista en Python sirve para guardar varios datos en una sola variable. Las listas pueden modificarse, agregar elementos o eliminar cosas.
+Ejemplo:
+numeros = [1, 2, 3]
+numeros.append(4)
+    for n in numeros:
+        print(n)
+Ahí se agrega el número 4 y luego el for recorre toda la lista.
 Pregunta 5
-
-Un método es una función que pertenece a una clase y trabaja con los objetos de esa clase. La diferencia es que un método normalmente usa self para acceder a los datos del objeto, mientras que una función normal no pertenece a ninguna clase y funciona por separado.
+El método __init__ sirve para dar valores iniciales a los objetos cuando se crea una clase. self representa al objeto actual y permite acceder a sus atributos y métodos. Sin self, los datos del objeto no podrían guardarse correctamente dentro de la clase.
